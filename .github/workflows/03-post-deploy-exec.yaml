@@ -10,9 +10,11 @@ name: 'N3 -Execução por Deploy'
 
 on:
   workflow_run:
-    workflows: ['N1 - Execução Manual', 'N2 - Execução Agendada']
+    workflows: ['N4 -Execução Integrada']
     types:
       - completed
+    branches:
+      - master
 
 #tarefas dentro da pipeline = jobs
 
