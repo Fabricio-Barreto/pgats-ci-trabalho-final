@@ -73,15 +73,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: latest
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package.json', 'yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
       - name: Instalando Yarn
         run: npm install -g yarn
 
       - name: Instalando dependências
-        run: yarn
+        run: yarn install --frozen-lockfile --prefer-offline
 
-      - name: Instalando Browsers do Playwright
-        run: yarn playwright install
+      - name: Instalando browser do Playwright
+        run: npx playwright install --with-deps chromium
 
       - name: Executando testes E2E
         run: yarn run e2e
