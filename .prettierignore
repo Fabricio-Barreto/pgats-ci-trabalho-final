@@ -1,0 +1,4 @@
+playwright-report/
+reports/
+test-results/
+.github/workflows/
